@@ -1,7 +1,7 @@
+import requests
 from discord.ext import commands
 from bs4 import BeautifulSoup
-from helpers.help_descriptions import info_help, invite_help, wiki_help
-import requests
+from src.help_descriptions import info_help, invite_help, wiki_help
 
 
 class Information(commands.Cog):

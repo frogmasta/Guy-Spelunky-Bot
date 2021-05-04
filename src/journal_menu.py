@@ -1,7 +1,7 @@
 import editdistance
 from discord.ext import menus
 from discord import Embed
-from helpers.journal_info import ENTRIES
+from src.journal_info import ENTRIES
 
 # Emoji constants
 dwelling = "<:DwellingHD:834524602704592997>"
@@ -77,7 +77,6 @@ class JournalMenu(menus.Menu):
         else:
             self.render_entry(entry)
 
-        print(self.embed.image.url)
         await self.message.edit(embed=self.embed)
 
     def render_homepage(self):

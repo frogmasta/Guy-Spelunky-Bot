@@ -1,6 +1,6 @@
+import zstandard
 from dataclasses import dataclass
 from enum import Enum
-import zstandard
 
 # Macros for position of run data in binary
 ID_POSITION = 0x0000008
@@ -61,38 +61,39 @@ def get_runs(compressed_data_handle):
         num_runs = int.from_bytes(reader.read(8), "little") - 2
 
         for _ in range(num_runs):
-            runs.append(Run())
-
+            runs.append({})
+        '''
         reader.seek(ID_POSITION + 2 * 8)
         for idx in range(num_runs):
-            runs[idx].id = int.from_bytes(reader.read(8), "little")
-
+            runs[idx]["id"] = int.from_bytes(reader.read(8), "little")
+        '''
         reader.seek(NAMES_POSITION + 2 * NAME_LENGTH)
         for idx in range(num_runs):
             data = reader.read(NAME_LENGTH).partition(b"\x00")[0]
-            runs[idx].name = data.decode("utf-8", errors="replace")
-
+            runs[idx]["name"] = data.decode("utf-8", errors="replace")
+        '''
         reader.seek(META_POSITION + 2 * 2)
         for idx in range(num_runs):
-            runs[idx].platform = int.from_bytes(reader.read(1), "little")
-            runs[idx].character = int.from_bytes(reader.read(1), "little")
+            runs[idx]["platform"] = int.from_bytes(reader.read(1), "little")
+            runs[idx]["character"] = int.from_bytes(reader.read(1), "little")
 
         reader.seek(RUNDATA_POSITION + 2 * 8)
         for idx in range(num_runs):
-            runs[idx].frames = int.from_bytes(reader.read(4), "little")
-            runs[idx].ending = int.from_bytes(reader.read(4), "little")
-
+            runs[idx]["frames"] = int.from_bytes(reader.read(4), "little")
+            runs[idx]["ending"] = int.from_bytes(reader.read(4), "little")
+        '''
         reader.seek(SCORES_POSITION + 2 * 8)
         for idx in range(num_runs):
-            runs[idx].score = int.from_bytes(reader.read(4), "little")
-            runs[idx].level = int.from_bytes(reader.read(4), "little")
-
+            runs[idx]["score"] = int.from_bytes(reader.read(4), "little")
+            runs[idx]["level"] = int.from_bytes(reader.read(4), "little")
+        '''
         reader.seek(BLOCK6_POSITION + 2 * 4)
         for idx in range(num_runs):
-            runs[idx].block6 = reader.read(4)
+            runs[idx]["block6"] = reader.read(4)
 
         reader.seek(BLOCK7_POSITION + 2 * 4)
         for idx in range(num_runs):
-            runs[idx].block7 = reader.read(4)
+            runs[idx]["block7"] = reader.read(4)
+        '''
 
     return runs

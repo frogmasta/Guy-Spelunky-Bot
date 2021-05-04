@@ -1,6 +1,6 @@
 from discord.ext import commands
-from helpers.journal_helper import JournalMenu
-from helpers.help_descriptions import journal_help
+from src.journal_menu import JournalMenu
+from src.help_descriptions import journal_help
 
 
 class Journal(commands.Cog):
