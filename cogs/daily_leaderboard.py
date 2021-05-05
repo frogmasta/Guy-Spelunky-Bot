@@ -24,6 +24,8 @@ class DailyLeaderboard(commands.Cog):
 
         status = download_leaderboard(date)
 
+        print(f"{date[4:6]}-{date[-2:]}-{date[:4]}")
+
         if status == "Success":
             with open(f'leaderboard_data/{date}', 'rb') as file:
                 runs = get_runs(file)

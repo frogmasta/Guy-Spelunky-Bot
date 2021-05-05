@@ -27,10 +27,7 @@ class Leaderboard(menus.Menu):
         icon = ctx.message.author.avatar_url
         leaderboard = self.generate_leaderboard()
 
-        print(leaderboard)
-
-        embed = Embed(title=self.title, color=0xD2691E)
-        embed.add_field(name=self.header, value=leaderboard, inline=False)
+        embed = Embed(title=self.title, color=0xD2691E, description=leaderboard)
         embed.set_footer(text=f"Page {self._page}/{self._maxPages}", icon_url=icon)
 
         self._embed = embed
@@ -51,11 +48,10 @@ class Leaderboard(menus.Menu):
             self._page += increment
             leaderboard = self.generate_leaderboard()
 
-            self._embed.clear_fields()
-            self._embed.add_field(name=self.header, value=leaderboard, inline=False)
-            self._embed.set_footer(text=f"Page {self._page}/{self._maxPages}", icon_url=icon)
+            embed = Embed(title=self.title, color=0xD2691E, description=leaderboard)
+            embed.set_footer(text=f"Page {self._page}/{self._maxPages}", icon_url=icon)
 
-        await self.message.edit(embed=self._embed)
+        await self.message.edit(embed=embed)
 
     async def display_entry(self, ctx, search_term):
         found = None
@@ -79,7 +75,10 @@ class Leaderboard(menus.Menu):
         await ctx.send(embed=self._embed)
 
     def generate_leaderboard(self):
-        leaderboard = ""
+        if self.header == '':
+            leaderboard = ""
+        else:
+            leaderboard = f"**{self.header}**\n"
 
         start_idx = (self._page - 1) * 10
         for idx in range(start_idx, start_idx + 10):
