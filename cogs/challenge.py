@@ -101,7 +101,7 @@ class DailyStruggle(commands.Cog):
         self.bot = bot
         self.challenges = {}  # dictionary of dates (key) and challenges (value)
 
-    @commands.command()
+    @commands.command(aliases=['ds'])
     async def dailystruggle(self, ctx):
         download_challenges()
 

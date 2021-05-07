@@ -20,20 +20,14 @@ class DailyLeaderboard(commands.Cog):
     async def daily(self, ctx, date=None):
         date = convert_date(date)
         if date == "Failed":
-            await ctx.send("It looks like you entered an invalid date!")
-            return
-        guild_id = self.get_guild(ctx)
+            return await ctx.send("It looks like you entered an invalid date!")
 
+        guild_id = self.get_guild(ctx)
         status = download_leaderboard(date)
 
         if status == "Success":
             with open(f'leaderboard_data/{date}', 'rb') as file:
-                runs = get_runs(file)
-
-                runs.sort(key=self.sort_dict[guild_id][1], reverse=self.sort_dict[guild_id][0])
-                for run in runs:
-                    run["level"] = convert_level(run["level"])
-
+                runs = self.parse_runs(file, guild_id=guild_id)
                 menu = Leaderboard(f"{date[4:6]}-{date[-2:]}-{date[:4]}", "Daily Leaderboard", runs)
                 await menu.start(ctx)
         else:
@@ -64,23 +58,36 @@ class DailyLeaderboard(commands.Cog):
         date = convert_date(args[0])
         if date == "Failed":
             date = datetime.utcnow().strftime("%Y%m%d")
-            name = ' '.join(args)
+            search_term = ' '.join(args)
+        elif len(args) < 2:
+            return await ctx.send("Please provide a valid search term")
         else:
-            name = ' '.join(args[1:])
+            search_term = ' '.join(args[1:])
 
         status = download_leaderboard(date)
 
         if status == "Success":
             with open(f'leaderboard_data/{date}', 'rb') as file:
-                runs = get_runs(file)
-                leaderboard = Leaderboard(date, "Daily Leaderboard", runs)
-                await leaderboard.display_entry(ctx, name)
+                runs = self.parse_runs(file)
+                leaderboard = Leaderboard(f"{date[4:6]}-{date[-2:]}-{date[:4]}", "Daily Leaderboard", runs)
+                await leaderboard.display_entry(ctx, search_term)
 
     def get_guild(self, ctx):
         guild_id = ctx.message.guild.id
         if guild_id not in self.sort_dict:
             self.sort_dict[guild_id] = [True, itemgetter("level", "score")]
         return guild_id
+
+    def parse_runs(self, file, *, guild_id=None):
+        runs = get_runs(file)
+
+        if guild_id:
+            runs.sort(key=self.sort_dict[guild_id][1], reverse=self.sort_dict[guild_id][0])
+
+        for run in runs:
+            run["level"] = convert_level(run["level"])
+
+        return runs
 
 
 def download_leaderboard(date):

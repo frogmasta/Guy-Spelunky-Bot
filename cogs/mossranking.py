@@ -7,6 +7,7 @@ from src.leaderboard import Leaderboard
 categories = {'main speed': "https://mossranking.com/ranking.php?id_ranking=20",
               'main score': "https://mossranking.com/ranking.php?id_ranking=21"}
 
+
 class MossRanking(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -25,7 +26,8 @@ class MossRanking(commands.Cog):
             if args == 'categories':
                 await ctx.send(f'Categories to choose from: ' + ", ".join([x.title() for x in categories.keys()]))
             else:
-                await ctx.send(f'Not a valid category! Categories to choose from: ' + ", ".join([x.title() for x in categories.keys()]))
+                await ctx.send(f'Not a valid category! Categories to choose from: ' + ", ".join(
+                    [x.title() for x in categories.keys()]))
             return
 
         data = await get_data(args)
@@ -33,11 +35,12 @@ class MossRanking(commands.Cog):
         menu = Leaderboard(f"MossRanking - {args.title()}", "", data)
         await menu.start(ctx)
 
-async def getCategories():
+
+async def getCategories():  # TODO: PLEASE change to only download once
     url = 'https://mossranking.com/categories.php?no_game=3&cid='
 
     categories = {'main speed': "https://mossranking.com/ranking.php?id_ranking=20",
-                'main score': "https://mossranking.com/ranking.php?id_ranking=21"}
+                  'main score': "https://mossranking.com/ranking.php?id_ranking=21"}
 
     for i in [str(x) for x in [1, 4, 2, 3, 5]]:
         catUrl = url + i
@@ -50,10 +53,12 @@ async def getCategories():
         for elem in tableElements:
             try:
                 elemData = elem.findAll('td')
-                categories[elemData[0].find('a').get_text().lower().strip('\r\n')] = 'https://mossranking.com/' + elemData[0].find('a').get('href')
+                categories[elemData[0].find('a').get_text().lower().strip('\r\n')] = 'https://mossranking.com/' + \
+                                                                                     elemData[0].find('a').get('href')
             except:
                 pass
     return categories
+
 
 async def get_data(category):
     global categories

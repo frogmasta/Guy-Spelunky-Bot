@@ -1,4 +1,5 @@
 import math
+import editdistance
 
 from discord import Embed
 from discord.ext import menus
@@ -55,10 +56,13 @@ class Leaderboard(menus.Menu):
             self._embed = embed
             await self.message.edit(embed=self._embed)
 
-    async def display_entry(self, ctx, search_term):
+    async def display_entry(self, ctx, search_term: str):
         found = None
         for entry in self.data:
-            if search_term in entry.values():
+            if 'name' not in entry:
+                raise KeyError("Key 'name' is not found!")
+
+            if entry['name'].lower() == search_term.lower():
                 found = entry
 
         if found is None:
@@ -66,9 +70,7 @@ class Leaderboard(menus.Menu):
 
         icon = ctx.message.author.avatar_url
         title = f"{list(found.values())[0]} | {self.title}"
-        stats = ""
-        for key in found.keys():
-            stats += f"{key}: **{found[key]}** "
+        stats = self.add_row(found, 1, emoji=False)
 
         embed = Embed(title=title, description=stats, color=0xD2691E)
         embed.set_footer(icon_url=icon)
@@ -91,12 +93,11 @@ class Leaderboard(menus.Menu):
         return leaderboard
 
     @staticmethod
-    def add_row(entry_dict, place):
+    def add_row(entry_dict, place, *, emoji=True):
         special_places = ['👑', '🥈', '🥉']
-
-        try:
+        if emoji and (place - 1) < 3:
             place_str = special_places[place - 1]
-        except IndexError:
+        else:
             place_str = f'#{place}'
 
         row = f"{place_str} - "

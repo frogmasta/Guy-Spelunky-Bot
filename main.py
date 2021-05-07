@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 
 # Load in environment variables
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN1')
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 # Create bot client
-bot = commands.Bot(command_prefix='s!')
+bot = commands.Bot(command_prefix='s@')
 
 
 # Tells when bot is ready
@@ -26,7 +26,7 @@ async def on_command_error(ctx, error):
         await ctx.send("That is not a command!")
         return
 
-    if ctx.command.has_error_handler or ctx.cog.has_error_handler:
+    if ctx.command.has_error_handler() or ctx.cog.has_error_handler():
         return
 
     raise error
