@@ -8,7 +8,7 @@ from discord.ext import commands
 from src.help_descriptions import daily_help, sort_help, search_help
 from src.leaderboard import Leaderboard
 from src.run_parser import get_runs
-from src.time_helper import convert_date, old_file
+from src.daily_time import convert_date, old_file
 
 
 class DailyLeaderboard(commands.Cog):
@@ -49,8 +49,10 @@ class DailyLeaderboard(commands.Cog):
         elif sort_method == "name":
             self.sort_dict[guild_id][1] = itemgetter("name")
         else:
-            await ctx.send(f"That is not a valid sort method.")
-            return
+            return await ctx.send(
+                "That is not a valid sort method. A list of all valid sorting types can be found with the command "
+                "s@help sort."
+            )
         await ctx.send("Sort order changed successfully!")
 
     @commands.command(**search_help)

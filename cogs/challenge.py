@@ -6,6 +6,8 @@ from pathlib import Path
 from discord import Embed
 from discord.ext import commands
 
+from src.help_descriptions import dailystruggle_help
+
 Endings = ['Normal', 'Special', 'Cosmic Ocean']
 
 Route = ['Volcano - Temple', 'Volcano - Tide Pool', 'Jungle - Temple', 'Jungle - Tide Pool']
@@ -101,7 +103,7 @@ class DailyStruggle(commands.Cog):
         self.bot = bot
         self.challenges = {}  # dictionary of dates (key) and challenges (value)
 
-    @commands.command(aliases=['ds'])
+    @commands.command(aliases=['ds'], **dailystruggle_help)
     async def dailystruggle(self, ctx):
         download_challenges()
 

@@ -5,6 +5,8 @@ import discord
 from discord.ext import commands, menus
 from dotenv import load_dotenv
 
+from src.help_descriptions import reddit_help
+
 load_dotenv()
 REDDIT_TOKEN = os.getenv('REDDIT_TOKEN')
 
@@ -117,9 +119,8 @@ class Reddit(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['r'])
+    @commands.command(aliases=['r'], **reddit_help)
     async def reddit(self, ctx, *args):
-
         icon = ctx.message.author.avatar_url
 
         if len(args) >= 1:

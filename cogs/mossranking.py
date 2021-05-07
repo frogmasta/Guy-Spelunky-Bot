@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from discord.ext import commands
 
 from src.leaderboard import Leaderboard
+from src.help_descriptions import mossranking_help
 
 categories = {'main speed': "https://mossranking.com/ranking.php?id_ranking=20",
               'main score': "https://mossranking.com/ranking.php?id_ranking=21"}
@@ -12,7 +13,7 @@ class MossRanking(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(**mossranking_help)
     async def mossranking(self, ctx, *args):
         if not args:
             args = 'main speed'

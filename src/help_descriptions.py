@@ -37,3 +37,19 @@ search_help = {
     "description": "Searches the daily leaderboard using the passed arguments. Format them as [date] [name]. If no "
                    "date is provided, it searches the current daily leaderboard."
 }
+
+mossranking_help = {
+    "brief": "Displays specified mossranking leaderboard.",
+    "description": "Displays specified mossranking leaderboard. Put the name of the leaderboard you want to search "
+                   "for after the command. If none are specified, it automatically displays the main leaderboard."
+}
+
+reddit_help = {
+    "brief": "Displays the r/spelunky subreddit.",
+    "description": "Displays results from the r/spelunky subreddit."
+}
+
+dailystruggle_help = {
+    "brief": "Shows today's daily struggle.",
+    "description": "Shows today's daily struggle."
+}
