@@ -1,6 +1,7 @@
-import zstandard
 from dataclasses import dataclass
 from enum import Enum
+
+import zstandard
 
 # Macros for position of run data in binary
 ID_POSITION = 0x0000008

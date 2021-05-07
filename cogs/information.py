@@ -1,6 +1,7 @@
 import requests
-from discord.ext import commands
 from bs4 import BeautifulSoup
+from discord.ext import commands
+
 from src.help_descriptions import info_help, invite_help, wiki_help
 
 

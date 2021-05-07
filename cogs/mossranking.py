@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
+
 from src.leaderboard import Leaderboard
 
 categories = {'main': "https://mossranking.com/ranking.php?id_ranking=18",

@@ -1,6 +1,7 @@
 import editdistance
-from discord.ext import menus
 from discord import Embed
+from discord.ext import menus
+
 from src.journal_info import ENTRIES
 
 # Emoji constants

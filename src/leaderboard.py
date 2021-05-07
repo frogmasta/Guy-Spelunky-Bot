@@ -1,4 +1,5 @@
 import math
+
 from discord import Embed
 from discord.ext import menus
 
