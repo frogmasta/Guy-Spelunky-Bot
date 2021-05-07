@@ -1,6 +1,7 @@
 import os
-import discord
+
 import asyncpraw
+import discord
 from discord.ext import commands, menus
 from dotenv import load_dotenv
 
