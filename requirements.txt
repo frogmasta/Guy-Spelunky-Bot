@@ -9,3 +9,4 @@ zstandard
 editdistance
 asyncio
 beautifulsoup4
+asyncpraw
