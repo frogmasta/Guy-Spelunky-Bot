@@ -33,7 +33,7 @@ async def getPosts(subreddit, category, icon):
         client_secret=REDDIT_TOKEN,
         user_agent="noah",
     )
-
+    
     if subreddit.startswith(('/r/', 'r/')):
         subreddit = subreddit.split('r/')[-1]
 
@@ -108,6 +108,7 @@ async def getPosts(subreddit, category, icon):
             else:  # otherwise, just assume its text
                 ems.append(await createEmbed(p.selftext, '', name, link, curPage, icon, logo))
 
+    await reddit.close()
     return ems
 
 
