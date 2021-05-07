@@ -24,8 +24,6 @@ class DailyLeaderboard(commands.Cog):
 
         status = download_leaderboard(date)
 
-        print(f"{date[4:6]}-{date[-2:]}-{date[:4]}")
-
         if status == "Success":
             with open(f'leaderboard_data/{date}', 'rb') as file:
                 runs = get_runs(file)
@@ -86,6 +84,7 @@ class DailyLeaderboard(commands.Cog):
 def download_leaderboard(date):
     file_path = f'leaderboard_data/{date}'
     if not Path(file_path).is_file() or old_file(date, file_path):
+        print("Downloading leaderboard...")
         url = f'http://cdn.spelunky2.net/static/{date}'
         leaderboard = requests.get(url, allow_redirects=True)
 

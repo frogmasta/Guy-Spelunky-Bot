@@ -51,7 +51,8 @@ class Leaderboard(menus.Menu):
             embed = Embed(title=self.title, color=0xD2691E, description=leaderboard)
             embed.set_footer(text=f"Page {self._page}/{self._maxPages}", icon_url=icon)
 
-        await self.message.edit(embed=embed)
+            self._embed = embed
+            await self.message.edit(embed=self._embed)
 
     async def display_entry(self, ctx, search_term):
         found = None
