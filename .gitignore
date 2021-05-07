@@ -4,6 +4,7 @@ leaderboard_data/
 mossranking_data/
 challenge.txt
 changelist.txt
+main.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

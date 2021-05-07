@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 
 # Load in environment variables
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_TOKEN1')
 
 # Create bot client
-bot = commands.Bot(command_prefix='s@')
+bot = commands.Bot(command_prefix='s!')
 
 
 # Tells when bot is ready
